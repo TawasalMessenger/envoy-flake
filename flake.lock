@@ -1,0 +1,62 @@
+{
+  "nodes": {
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1606424373,
+        "narHash": "sha256-oq8d4//CJOrVj+EcOaSXvMebvuTkmBJuT5tzlfewUnQ=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "99f1c2157fba4bfe6211a321fd0ee43199025dbf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1608539541,
+        "narHash": "sha256-WKm6Cp/SeZsU/S+5tcDn6LictZGhi08KAOJP4WQ9amc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5af1fcb77a737c86eb283ac25c7007dc4f1eb005",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5af1fcb77a737c86eb283ac25c7007dc4f1eb005",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": "nixpkgs",
+        "src": "src"
+      }
+    },
+    "src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1610395316,
+        "narHash": "sha256-X+iVnSIPZ6Fg2l3EgKPF60KQswhYoBD5+AT9a5DnNjM=",
+        "owner": "envoyproxy",
+        "repo": "envoy",
+        "rev": "5c801b25cae04f06bf48248c90e87d623d7a6283",
+        "type": "github"
+      },
+      "original": {
+        "owner": "envoyproxy",
+        "ref": "v1.17.0",
+        "repo": "envoy",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
