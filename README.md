@@ -9,8 +9,8 @@
 # ...
   imports = [
     (import (fetchTarball {
-      url = "https://github.com/TawasalMessenger/envoy-flake/archive/902dacc317009bb46bb31fb8a705f126d2f6e2ac.tar.gz";
-      sha256 = "151w6s46kvd3jbmv533wszwq5ik0465a44y2yi9lcxdjsg62z5lj";
+      url = "https://github.com/TawasalMessenger/envoy-flake/archive/1.17.0.tar.gz";
+      sha256 = "1iz7cc2jgxrvnr7d63566h07g1c74cm1gi7j6f93bix6kkkxcjnp";
     })).nixosModule
   ];
 # ...
