@@ -40,6 +40,7 @@
           ./configuration.nix
         ];
         nixpkgs.overlays = [ overlay ];
+        services.envoy.package = envoy;
       };
       overlay = final: prev: derivation;
     };

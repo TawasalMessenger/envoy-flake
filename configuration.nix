@@ -13,7 +13,6 @@ with lib; {
 
     package = mkOption {
       type = types.package;
-      default = pkgs.envoy;
     };
 
     config = mkOption {
