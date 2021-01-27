@@ -28,19 +28,19 @@
       };
       derivation = { inherit envoy; };
     in
-    rec {
+    with pkgs; rec {
       packages.${system} = derivation;
       defaultPackage.${system} = envoy;
       apps.${system}.envoy = mkApp { drv = envoy; };
       defaultApp.${system} = apps.envoy;
-      legacyPackages.${system} = pkgs.extend overlay;
-      devShell.${system} = pkgs.callPackage ./shell.nix derivation;
+      legacyPackages.${system} = extend overlay;
+      devShell.${system} = callPackage ./shell.nix derivation;
       nixosModule = {
         imports = [
           ./configuration.nix
         ];
         nixpkgs.overlays = [ overlay ];
-        services.envoy.package = envoy;
+        services.envoy.package = lib.mkDefault envoy;
       };
       overlay = final: prev: derivation;
     };
