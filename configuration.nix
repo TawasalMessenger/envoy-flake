@@ -33,6 +33,7 @@ with lib; {
     users = {
       users.envoy = {
         createHome = false;
+        isSystemUser = true;
         group = "envoy";
         uid = 16666;
       };

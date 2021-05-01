@@ -2,18 +2,19 @@
   description = "Envoy flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/5af1fcb77a737c86eb283ac25c7007dc4f1eb005";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };
+    flake-utils.url = "github:numtide/flake-utils";
     src = {
-      url = "github:envoyproxy/envoy/v1.17.0";
+      url = "github:envoyproxy/envoy/v1.18.2";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, flake-compat, src }:
+  outputs = { self, nixpkgs, flake-compat, flake-utils, src }:
     let
       sources = with builtins; (fromJSON (readFile ./flake.lock)).nodes;
       system = "x86_64-linux";
@@ -22,16 +23,12 @@
         inherit pkgs src;
         version = sources.src.original.ref;
       };
-      mkApp = drv: {
-        type = "app";
-        program = "${drv.pname or drv.name}${drv.passthru.exePath}";
-      };
       derivation = { inherit envoy; };
     in
     with pkgs; rec {
       packages.${system} = derivation;
       defaultPackage.${system} = envoy;
-      apps.${system}.envoy = mkApp { drv = envoy; };
+      apps.${system}.envoy = flake-utils.lib.mkApp { drv = envoy; };
       defaultApp.${system} = apps.envoy;
       legacyPackages.${system} = extend overlay;
       devShell.${system} = callPackage ./shell.nix derivation;

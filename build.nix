@@ -116,7 +116,7 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
       sed -e '/^FILE:@com_github_gperftools_gperftools/autom4te.cache.*/d' -i $bazelOut/external/\@*.marker
     '';
 
-    sha256 = "Cz/8ddlpVg3XA65PE7YFu2B4J8/wnn9bsDWH72esjhQ=";
+    sha256 = "J4IYG6zSJLDweSFqjz2wqrON37hcBdLjpSwGS/c2DdQ=";
   };
 
   buildAttrs = {
