@@ -1,4 +1,4 @@
-{ pkgs, src, version }:
+{ pkgs, go_1_15, src, version }:
 
 with pkgs;
 let
@@ -43,10 +43,10 @@ let
     rm -f .bazelversion
 
     sed -e 's;rules_foreign_cc_dependencies();rules_foreign_cc_dependencies(["//:nix_cmake_toolchain", "//:nix_ninja_toolchain", "//:nix_make_toolchain"], False);g' -i bazel/dependency_imports.bzl
-    sed -e 's;go_register_toolchains(go_version);go_register_toolchains(go_version = "host");g' -i bazel/dependency_imports.bzl
+    sed -e 's;GO_VERSION = "1.15.5";GO_VERSION = "host";g' -i bazel/dependency_imports.bzl
 
     sed -e 's;gn=buildtools/linux64/gn;gn=$$(command -v gn);g' -i bazel/external/wee8.genrule_cmd
-    sed -e 's;ninja=third_party/depot_tools/ninja;ninja=$$(command -v ninja);g' -i bazel/external/wee8.genrule_cmd
+    sed -e 's;ninja=third_party/depot_tools/ninja-linux64;ninja=$$(command -v ninja);g' -i bazel/external/wee8.genrule_cmd
   '';
 in
 buildBazelPackage.override { stdenv = gcc9Stdenv; } {
@@ -62,16 +62,17 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
     git
     gnumake
     gn
-    go
+    go_1_15
     libtool
     ninja
     python3
 
     bazel-buildtools
+    nix
   ];
 
   bazel = bazel_3;
-  bazelTarget = "//source/exe:envoy-static";
+  bazelTarget = "//source/exe:envoy-static.stripped";
   bazelFetchFlags = [
     "--loading_phase_threads=HOST_CPUS"
   ];
@@ -81,13 +82,28 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
     "--host_javabase=@bazel_tools//tools/jdk:absolute_javabase"
     "--javabase=@bazel_tools//tools/jdk:absolute_javabase"
     "--spawn_strategy=standalone"
-    "--noexperimental_strict_action_env"
     "--cxxopt=-Wno-maybe-uninitialized"
     "--cxxopt=-Wno-uninitialized"
+
+    "--//source/extensions/clusters/redis:enabled=false"
+    "--//source/extensions/filters/common/lua:enabled=false"
+    "--//source/extensions/filters/network/dubbo_proxy:enabled=false"
+    "--//source/extensions/filters/network/kafka:enabled=false"
+    "--//source/extensions/filters/network/mongo_proxy:enabled=false"
+    "--//source/extensions/filters/network/mysql_proxy:enabled=false"
+    "--//source/extensions/filters/network/postgres_proxy:enabled=false"
+    "--//source/extensions/filters/network/redis_proxy:enabled=false"
+    "--//source/extensions/filters/network/rocketmq_proxy:enabled=false"
+    "--//source/extensions/filters/network/thrift_proxy:enabled=false"
+    "--//source/extensions/filters/network/zookeeper_proxy:enabled=false"
+    "--//source/extensions/wasm_runtime/v8:enabled=false"
   ];
   fetchConfigured = true;
   removeRulesCC = false;
+  removeLocalConfigCc = true;
+  removeLocal = false;
 
+  dontAddBazelOpts = true;
   dontUseCmakeConfigure = true;
   dontUseGnConfigure = true;
 
@@ -111,12 +127,22 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
       rm -rf $bazelOut/external/{bazel_gazelle_go_repository_tools,\@bazel_gazelle_go_repository_tools.marker}
       sed -e '/^FILE:@bazel_gazelle_go_repository_tools.*/d' -i $bazelOut/external/\@*.marker
 
+      # Retains go build input markers
+      chmod -R 755 $bazelOut/external/{bazel_gazelle_go_repository_cache,@\bazel_gazelle_go_repository_cache.marker}
+      rm -rf $bazelOut/external/{bazel_gazelle_go_repository_cache,@\bazel_gazelle_go_repository_cache.marker}
+
       # Remove the autoconf caches
       rm -rf $bazelOut/external/com_github_gperftools_gperftools/autom4te.cache
       sed -e '/^FILE:@com_github_gperftools_gperftools/autom4te.cache.*/d' -i $bazelOut/external/\@*.marker
     '';
 
-    sha256 = "J4IYG6zSJLDweSFqjz2wqrON37hcBdLjpSwGS/c2DdQ=";
+    postInstall = ''
+      for d in $bazelOut/external/* ; do
+        echo "$d $(nix-hash --type sha256 $d)"
+      done
+    '';
+
+    sha256 = "9FSxeOtr6djIk060oEx0piwPa/6tjyg/28Si0a/JTFA=";
   };
 
   buildAttrs = {
