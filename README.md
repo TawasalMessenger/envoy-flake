@@ -1,18 +1,7 @@
-# Install
-
-## Global installation for NixOS
-
-/etc/nixos/configuration.nix:
+# Configure
 
 ```nix
 {
-# ...
-  imports = [
-    (import (fetchTarball {
-      url = "https://github.com/TawasalMessenger/envoy-flake/archive/1.17.0-2.tar.gz";
-      sha256 = "1diy8mscnr461icdyjqi7kfwgvky8l8skvcglliq9rl8jkffi6kk";
-    })).nixosModule
-  ];
 # ...
   services.envoy = {
     enable = true;
