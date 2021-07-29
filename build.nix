@@ -1,4 +1,4 @@
-{ pkgs, go_1_15, src, version }:
+{ pkgs, src, version }:
 
 with pkgs;
 let
@@ -71,7 +71,7 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
     nix
   ];
 
-  bazel = bazel_3;
+  bazel = bazel_4;
   bazelTarget = "//source/exe:envoy-static.stripped";
   bazelFetchFlags = [
     "--loading_phase_threads=HOST_CPUS"
@@ -142,7 +142,7 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
       done
     '';
 
-    sha256 = "9FSxeOtr6djIk060oEx0piwPa/6tjyg/28Si0a/JTFA=";
+    sha256 = "fMoeMke2bC7BHzVllx4mhh+kjBmAyoM1Vcu/xbirdVs=";
   };
 
   buildAttrs = {

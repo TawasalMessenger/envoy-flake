@@ -3,22 +3,20 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
-    nixpkgs_go.url = "github:NixOS/nixpkgs/fc7bd322dfcd204ce6daa95285ff358999ff9a8d"; # https://github.com/envoyproxy/envoy/pull/16083
     flake-utils.url = "github:numtide/flake-utils";
     src = {
-      url = "github:envoyproxy/envoy/v1.18.3";
+      url = "github:envoyproxy/envoy/v1.19.0";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs_go, flake-utils, src }:
+  outputs = { self, nixpkgs, flake-utils, src }:
     let
       sources = with builtins; (fromJSON (readFile ./flake.lock)).nodes;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      go_1_15 = nixpkgs_go.legacyPackages.${system}.go_1_15;
       envoy = import ./build.nix {
-        inherit pkgs go_1_15 src;
+        inherit pkgs src;
         version = sources.src.original.ref;
       };
       envoy-app = flake-utils.lib.mkApp { drv = envoy; };
