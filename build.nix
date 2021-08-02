@@ -137,12 +137,15 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
     '';
 
     postInstall = ''
-      for d in $bazelOut/external/* ; do
+      for d in $bazelOut/external/{foreign_cc_platform_utils,kafka_pip3,local_config_sh,pypi__pip,pypi__pkginfo,pypi__setuptools,rules_foreign_cc_bazel_version,rules_python} ; do
         echo "$d $(nix-hash --type sha256 $d)"
+        echo $d
+        ls -laR $d
+        find $d/ -type f -exec bash -c "echo {} && nix-hash --type sha256 {}" \;
       done
     '';
 
-    sha256 = "fMoeMke2bC7BHzVllx4mhh+kjBmAyoM1Vcu/xbirdVs=";
+    sha256 = "KnDX7Ix4DddAqa8l1zQkyOY5fhb45HX/5sCDrlomJCM=";
   };
 
   buildAttrs = {
