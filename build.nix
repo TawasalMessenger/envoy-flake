@@ -68,7 +68,7 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
     python3
 
     bazel-buildtools
-    nix
+    # nix
   ];
 
   bazel = bazel_4;
@@ -136,14 +136,14 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
       sed -e '/^FILE:@com_github_gperftools_gperftools/autom4te.cache.*/d' -i $bazelOut/external/\@*.marker
     '';
 
-    postInstall = ''
-      for d in $bazelOut/external/{foreign_cc_platform_utils,kafka_pip3,local_config_sh,pypi__pip,pypi__pkginfo,pypi__setuptools,rules_foreign_cc_bazel_version,rules_python} ; do
-        echo "$d $(nix-hash --type sha256 $d)"
-        echo $d
-        ls -laR $d
-        find $d/ -type f -exec bash -c "echo {} && nix-hash --type sha256 {}" \;
-      done
-    '';
+    # postInstall = ''
+    #   for d in $bazelOut/external/{foreign_cc_platform_utils,kafka_pip3,local_config_sh,pypi__pip,pypi__pkginfo,pypi__setuptools,rules_foreign_cc_bazel_version,rules_python} ; do
+    #     echo "$d $(nix-hash --type sha256 $d)"
+    #     echo $d
+    #     ls -laR $d
+    #     find $d/ -type f -exec bash -c "echo {} && nix-hash --type sha256 {}" \;
+    #   done
+    # '';
 
     sha256 = "KnDX7Ix4DddAqa8l1zQkyOY5fhb45HX/5sCDrlomJCM=";
   };
