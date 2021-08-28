@@ -2,10 +2,10 @@
   description = "Envoy flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/46f0f0ed231907182986e14aa8623f00629e09a1";
     flake-utils.url = "github:numtide/flake-utils";
     src = {
-      url = "github:envoyproxy/envoy/v1.19.0";
+      url = "github:envoyproxy/envoy/v1.19.1";
       flake = false;
     };
   };

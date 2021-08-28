@@ -49,7 +49,7 @@ let
     sed -e 's;ninja=third_party/depot_tools/ninja-linux64;ninja=$$(command -v ninja);g' -i bazel/external/wee8.genrule_cmd
   '';
 in
-buildBazelPackage.override { stdenv = gcc9Stdenv; } {
+buildBazelPackage {
   inherit src version;
   pname = "envoy";
 
@@ -78,7 +78,7 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
   ];
   bazelFlags = [
     "-c opt"
-    "--define=ABSOLUTE_JAVABASE=${jdk11.home}"
+    "--define=ABSOLUTE_JAVABASE=${jdk11_headless.home}"
     "--host_javabase=@bazel_tools//tools/jdk:absolute_javabase"
     "--javabase=@bazel_tools//tools/jdk:absolute_javabase"
     "--spawn_strategy=standalone"
@@ -145,7 +145,7 @@ buildBazelPackage.override { stdenv = gcc9Stdenv; } {
     #   done
     # '';
 
-    sha256 = "KnDX7Ix4DddAqa8l1zQkyOY5fhb45HX/5sCDrlomJCM=";
+    sha256 = "w4rubc/ngnwkJCgmRdoFQ5x/P30DGYk90ELPf24o+qU=";
   };
 
   buildAttrs = {
