@@ -145,7 +145,7 @@ buildBazelPackage {
     #   done
     # '';
 
-    sha256 = "w4rubc/ngnwkJCgmRdoFQ5x/P30DGYk90ELPf24o+qU=";
+    sha256 = "Nf2JRP7y8v6BKdimR04Rvt6BvqUJEoX8KFV2T9KJ1mI=";
   };
 
   buildAttrs = {
