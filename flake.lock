@@ -17,11 +17,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1632650849,
-        "narHash": "sha256-PYKC/aP409p4+Gnn0Ix7gFJncg1NwQgguwdTEyC8t+A=",
+        "lastModified": 1633329294,
+        "narHash": "sha256-0LpQLS4KMgxslMgmDHmxG/5twFlXDBW9z4Or1iOrCvU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b5182c214fac1e6db9f28ed8a7cfc2d0c255c763",
+        "rev": "ee084c02040e864eeeb4cf4f8538d92f7c675671",
         "type": "github"
       },
       "original": {
@@ -41,16 +41,16 @@
     "src": {
       "flake": false,
       "locked": {
-        "lastModified": 1629832962,
-        "narHash": "sha256-NLwO3xB5ElInfT7fLYJuFuduOivWDxO8/7UgY6vkNwQ=",
+        "lastModified": 1633440809,
+        "narHash": "sha256-0fbLRwfbBW3zhGmtBwX8MhpPrl7f5lMqjXpvJwTBN60=",
         "owner": "envoyproxy",
         "repo": "envoy",
-        "rev": "a2a1e3eed4214a38608ec223859fcfa8fb679b14",
+        "rev": "96701cb24611b0f3aac1cc0dd8bf8589fbdf8e9e",
         "type": "github"
       },
       "original": {
         "owner": "envoyproxy",
-        "ref": "v1.19.1",
+        "ref": "v1.20.0",
         "repo": "envoy",
         "type": "github"
       }

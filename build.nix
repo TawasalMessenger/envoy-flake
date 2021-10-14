@@ -6,7 +6,7 @@ let
     # pass in the paths to rules_foreign_cc as custom toolchains to work around
     # https://github.com/bazelbuild/rules_foreign_cc/issues/225
     cat >> BUILD <<EOF
-    load("@rules_foreign_cc//tools/build_defs/native_tools:native_tools_toolchain.bzl", "native_tool_toolchain")
+    load("@rules_foreign_cc//toolchains/native_tools:native_tools_toolchain.bzl", "native_tool_toolchain")
     native_tool_toolchain(
         name = "nix_cmake",
         path = "${cmake}/bin/cmake",
@@ -15,7 +15,7 @@ let
     toolchain(
         name = "nix_cmake_toolchain",
         toolchain = ":nix_cmake",
-        toolchain_type = "@rules_foreign_cc//tools/build_defs:cmake_toolchain",
+        toolchain_type = "@rules_foreign_cc//toolchains:cmake_toolchain",
     )
     native_tool_toolchain(
         name = "nix_ninja",
@@ -25,7 +25,7 @@ let
     toolchain(
         name = "nix_ninja_toolchain",
         toolchain = ":nix_ninja",
-        toolchain_type = "@rules_foreign_cc//tools/build_defs:ninja_toolchain",
+        toolchain_type = "@rules_foreign_cc//toolchains:ninja_toolchain",
     )
     native_tool_toolchain(
         name = "nix_make",
@@ -35,14 +35,14 @@ let
     toolchain(
         name = "nix_make_toolchain",
         toolchain = ":nix_make",
-        toolchain_type = "@rules_foreign_cc//tools/build_defs:make_toolchain",
+        toolchain_type = "@rules_foreign_cc//toolchains:make_toolchain",
     )
     EOF
   '';
   preBuild = ''
     rm -f .bazelversion
 
-    sed -e 's;rules_foreign_cc_dependencies();rules_foreign_cc_dependencies(["//:nix_cmake_toolchain", "//:nix_ninja_toolchain", "//:nix_make_toolchain"], False);g' -i bazel/dependency_imports.bzl
+    sed -e 's;rules_foreign_cc_dependencies(register_default_tools = False, register_built_tools = False);rules_foreign_cc_dependencies(["//:nix_cmake_toolchain", "//:nix_ninja_toolchain", "//:nix_make_toolchain"], False);g' -i bazel/dependency_imports.bzl
     sed -e 's;GO_VERSION = "1.15.5";GO_VERSION = "host";g' -i bazel/dependency_imports.bzl
 
     sed -e 's;gn=buildtools/linux64/gn;gn=$$(command -v gn);g' -i bazel/external/wee8.genrule_cmd
@@ -88,12 +88,8 @@ buildBazelPackage {
     "--//source/extensions/clusters/redis:enabled=false"
     "--//source/extensions/filters/common/lua:enabled=false"
     "--//source/extensions/filters/network/dubbo_proxy:enabled=false"
-    "--//source/extensions/filters/network/kafka:enabled=false"
     "--//source/extensions/filters/network/mongo_proxy:enabled=false"
-    "--//source/extensions/filters/network/mysql_proxy:enabled=false"
-    "--//source/extensions/filters/network/postgres_proxy:enabled=false"
     "--//source/extensions/filters/network/redis_proxy:enabled=false"
-    "--//source/extensions/filters/network/rocketmq_proxy:enabled=false"
     "--//source/extensions/filters/network/thrift_proxy:enabled=false"
     "--//source/extensions/filters/network/zookeeper_proxy:enabled=false"
     "--//source/extensions/wasm_runtime/v8:enabled=false"
@@ -145,12 +141,12 @@ buildBazelPackage {
     #   done
     # '';
 
-    sha256 = "Nf2JRP7y8v6BKdimR04Rvt6BvqUJEoX8KFV2T9KJ1mI=";
+    sha256 = "BB2IJbeL23MLQQkt3Dhe/0kRj5kAX///EMIBb0Lhxc4=";
   };
 
   buildAttrs = {
     preBuild = toolchainPatch { inherit cmake ninja gnumake; } + preBuild + ''
-      sed -i 's,#!/usr/bin/env bash,#!${stdenv.shell},' $bazelOut/external/rules_foreign_cc/tools/build_defs/framework.bzl
+      sed -i 's,#!/usr/bin/env bash,#!${stdenv.shell},' $bazelOut/external/rules_foreign_cc/foreign_cc/private/framework/toolchains/linux_commands.bzl
 
       patchShebangs $bazelOut/external/com_github_luajit_luajit/build.py
 

@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     src = {
-      url = "github:envoyproxy/envoy/v1.19.1";
+      url = "github:envoyproxy/envoy/v1.20.0";
       flake = false;
     };
   };
