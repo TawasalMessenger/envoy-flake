@@ -2,11 +2,11 @@
   "nodes": {
     "flake-utils": {
       "locked": {
-        "lastModified": 1631561581,
-        "narHash": "sha256-3VQMV5zvxaVLvqqUrNz3iJelLw30mIVSfZmAaauM3dA=",
+        "lastModified": 1638122382,
+        "narHash": "sha256-sQzZzAbvKEqN9s0bzWuYmRaA03v40gaJ4+iL1LXjaeI=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "7e5bf3925f6fbdfaf50a2a7ca0be2879c4261d19",
+        "rev": "74f7e4319258e287b0f9cb95426c9853b282730b",
         "type": "github"
       },
       "original": {
@@ -17,16 +17,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1633329294,
-        "narHash": "sha256-0LpQLS4KMgxslMgmDHmxG/5twFlXDBW9z4Or1iOrCvU=",
+        "lastModified": 1639161226,
+        "narHash": "sha256-75Y08ynJDTq6HHGIF+8IADBJSVip0UyWQH7jqSFnRR8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ee084c02040e864eeeb4cf4f8538d92f7c675671",
+        "rev": "573095944e7c1d58d30fc679c81af63668b54056",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
+        "ref": "nixos-21.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -41,16 +41,16 @@
     "src": {
       "flake": false,
       "locked": {
-        "lastModified": 1633440809,
-        "narHash": "sha256-0fbLRwfbBW3zhGmtBwX8MhpPrl7f5lMqjXpvJwTBN60=",
+        "lastModified": 1638304088,
+        "narHash": "sha256-+N6e93aAAYjkoKQ3EbFEfd05cXGdoFHgkAcMWITkRDY=",
         "owner": "envoyproxy",
         "repo": "envoy",
-        "rev": "96701cb24611b0f3aac1cc0dd8bf8589fbdf8e9e",
+        "rev": "ea23f47b27464794980c05ab290a3b73d801405e",
         "type": "github"
       },
       "original": {
         "owner": "envoyproxy",
-        "ref": "v1.20.0",
+        "ref": "v1.20.1",
         "repo": "envoy",
         "type": "github"
       }
